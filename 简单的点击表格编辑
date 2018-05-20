@@ -1,0 +1,38 @@
+(function ($) {
+var tableEdit = {
+init: function () {
+this.bind();
+},
+datas: {
+},
+elmObj: {
+$td: $("table tr td")
+},
+do: {
+tdClickDo: function (e) {
+var me = $(e.target);
+var text = me.text();
+me.html('')
+.find('input')
+.on("blur", $.proxy(this.do.tdInputBlurDo, this)).focus();
+},
+tdKeyupDo: function (e) {
+var me = $(e.target);
+var text = me.val();
+if (e.keyCode == 13) {
+me.parent("td").html(text);
+}
+},
+tdInputBlurDo: function (e) {
+var me = $(e.target);
+var text = me.val();
+me.parent("td").html(text);
+}
+},
+bind: function () {
+this.elmObj.$td.on("click", $.proxy(this.do.tdClickDo, this))
+.on("keyup", $.proxy(this.do.tdKeyupDo, this));
+}
+};
+tableEdit.init();
+})(jQuery)
